@@ -26,6 +26,7 @@ android {
 dependencies {
     api(platform("androidx.compose:compose-bom:2025.06.00"))
     api("androidx.compose.ui:ui")
+    api("androidx.compose.foundation:foundation")
     // 접힘 감지
     api("androidx.window:window:1.4.0")
     // 광고 (AdMob)
