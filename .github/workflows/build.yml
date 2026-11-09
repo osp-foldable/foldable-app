@@ -20,8 +20,8 @@ jobs:
       matrix:
         app: [number]       # 새 앱 추가 시 여기에도 이름 추가
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '17'
@@ -51,8 +51,8 @@ jobs:
           echo "app=$APP" >> "$GITHUB_OUTPUT"
           echo "version=$VER" >> "$GITHUB_OUTPUT"
           echo "APP_UPPER=$(echo "$APP" | tr '[:lower:]' '[:upper:]')" >> "$GITHUB_ENV"
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '17'
