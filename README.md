@@ -33,6 +33,10 @@ git push origin pick-v1.0.0
    | `PICK_KEYSTORE_PASSWORD` | keystore 비밀번호 |
    | `PICK_KEY_ALIAS` | `pick` |
    | `PICK_KEY_PASSWORD` | 키 비밀번호 |
+   | `PICK_ADMOB_APP_ID` | AdMob 앱 ID (`ca-app-pub-…~…`) |
+   | `PICK_ADMOB_BANNER_ID` | AdMob 배너 광고 단위 ID (`ca-app-pub-…/…`) |
+
+   광고 ID 두 개가 없으면 출시 빌드도 테스트 광고로 만들어지니 꼭 넣기. 디버그 빌드는 항상 테스트 광고.
 
 4. **`.jks` 파일과 비밀번호는 저장소에 올리지 말고 따로 안전하게 보관** (잃어버리면 업데이트 불가 — Play 앱 서명을 쓰면 업로드 키는 재설정 가능)
 
@@ -40,7 +44,7 @@ git push origin pick-v1.0.0
 1. `apps/<이름>` 폴더 만들기 (`apps/pick`을 참고, 패키지 `com.ohsang.play.fold<이름>`)
 2. `settings.gradle.kts`에 `include(":apps:<이름>")`
 3. `.github/workflows/build.yml`의 `matrix.app`에 이름 추가
-4. Secrets에 `<이름 대문자>_KEYSTORE_BASE64` 등 4개 추가
+4. Secrets에 `<이름 대문자>_KEYSTORE_BASE64` 등 서명 4개 + AdMob 2개 추가
 
 ## 로컬에서 열기
 Android Studio에서 저장소 폴더를 Open. Gradle 래퍼가 없으니 처음 동기화 때 Studio 안내대로 만들거나 `gradle wrapper` 한 번 실행.

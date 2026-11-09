@@ -28,4 +28,6 @@ dependencies {
     api("androidx.compose.ui:ui")
     // 접힘 감지
     api("androidx.window:window:1.4.0")
+    // 광고 (AdMob)
+    api("com.google.android.gms:play-services-ads:24.4.0")
 }

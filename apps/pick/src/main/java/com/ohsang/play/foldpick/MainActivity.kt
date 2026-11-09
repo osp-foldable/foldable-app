@@ -13,8 +13,11 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.google.android.gms.ads.MobileAds
 import com.ohsang.play.fold.core.postureFlow
 import com.ohsang.play.foldpick.ui.AppRoot
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -30,6 +33,9 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        // 광고 SDK 초기화는 메인 스레드를 막지 않게 백그라운드에서
+        CoroutineScope(Dispatchers.IO).launch { MobileAds.initialize(this@MainActivity) {} }
 
         // 화면 꺼짐은 시스템 방송이라 NOT_EXPORTED로도 받을 수 있음 (Android 14+ 필수 플래그)
         ContextCompat.registerReceiver(

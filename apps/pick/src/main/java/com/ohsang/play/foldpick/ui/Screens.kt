@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -27,6 +29,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -35,7 +38,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ohsang.play.foldpick.DrawViewModel
 import com.ohsang.play.foldpick.MAX_MAX
 import com.ohsang.play.foldpick.MIN_MAX
+import com.ohsang.play.fold.core.BottomBannerAd
 import com.ohsang.play.fold.core.C
+import com.ohsang.play.foldpick.BuildConfig
 import com.ohsang.play.fold.core.NumberFont
 import com.ohsang.play.fold.core.Posture
 import com.ohsang.play.foldpick.R
@@ -49,15 +54,24 @@ fun AppRoot(vm: DrawViewModel) {
         vm.closeSettings()
     }
 
-    Box(Modifier.fillMaxSize().background(C.Bg).safeDrawingPadding()) {
-        if (s.posture == Posture.UNFOLDED) {
-            when {
-                s.showDone -> DoneScreen(s, vm)
-                s.showSettings || s.current == null -> GuideScreen(s, vm)
-                else -> RevealScreen(s, vm)
+    // 키보드가 올라와 있을 땐 배너를 숨김 (키보드 바로 위 광고는 실수 클릭 위험)
+    val imeVisible = WindowInsets.ime.getBottom(LocalDensity.current) > 0
+
+    Column(Modifier.fillMaxSize().background(C.Bg).safeDrawingPadding()) {
+        Box(Modifier.weight(1f).fillMaxWidth()) {
+            if (s.posture == Posture.UNFOLDED) {
+                when {
+                    s.showDone -> DoneScreen(s, vm)
+                    s.showSettings || s.current == null -> GuideScreen(s, vm)
+                    else -> RevealScreen(s, vm)
+                }
+            } else {
+                if (!s.started) SetupScreen(s, vm) else ReadyScreen(s, vm)
             }
-        } else {
-            if (!s.started) SetupScreen(s, vm) else ReadyScreen(s, vm)
+        }
+        // 접힘·펼침 둘 다 하단 배너. 버튼과 붙지 않게 위쪽 여백
+        if (!imeVisible && s.posture != Posture.UNKNOWN) {
+            BottomBannerAd(BuildConfig.BANNER_AD_UNIT_ID, Modifier.padding(top = 8.dp))
         }
     }
 }

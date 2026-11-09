@@ -75,6 +75,8 @@ jobs:
           KEYSTORE_PASSWORD: ${{ secrets[format('{0}_KEYSTORE_PASSWORD', env.APP_UPPER)] }}
           KEY_ALIAS: ${{ secrets[format('{0}_KEY_ALIAS', env.APP_UPPER)] }}
           KEY_PASSWORD: ${{ secrets[format('{0}_KEY_PASSWORD', env.APP_UPPER)] }}
+          ADMOB_APP_ID: ${{ secrets[format('{0}_ADMOB_APP_ID', env.APP_UPPER)] }}
+          ADMOB_BANNER_ID: ${{ secrets[format('{0}_ADMOB_BANNER_ID', env.APP_UPPER)] }}
         run: gradle :apps:${{ steps.tag.outputs.app }}:bundleRelease :apps:${{ steps.tag.outputs.app }}:assembleRelease --stacktrace
       - uses: actions/upload-artifact@v4
         with:

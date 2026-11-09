@@ -4,6 +4,10 @@ plugins {
     id("org.jetbrains.kotlin.plugin.compose")
 }
 
+// Google 공식 테스트 ID
+val TEST_ADMOB_APP_ID = "ca-app-pub-3940256099942544~3347511713"
+val TEST_BANNER_ID = "ca-app-pub-3940256099942544/9214589741"
+
 android {
     namespace = "com.ohsang.play.foldpick"
     compileSdk = 36
@@ -32,7 +36,24 @@ android {
     }
 
     buildTypes {
+        // 디버그는 항상 Google 테스트 광고 (실제 광고를 직접 누르면 계정 정지 위험)
+        debug {
+            manifestPlaceholders["admobAppId"] = TEST_ADMOB_APP_ID
+            buildConfigField("String", "BANNER_AD_UNIT_ID", "\"$TEST_BANNER_ID\"")
+        }
+        // 출시는 CI가 Secrets(PICK_ADMOB_APP_ID, PICK_ADMOB_BANNER_ID)로 넘겨준 실제 ID.
+        // 없으면 테스트 ID로 빌드되고 경고만 남김
         release {
+            val appId = System.getenv("ADMOB_APP_ID")
+            val bannerId = System.getenv("ADMOB_BANNER_ID")
+            if (appId.isNullOrBlank() || bannerId.isNullOrBlank()) {
+                logger.warn("⚠️ ADMOB_APP_ID / ADMOB_BANNER_ID 없음 → 테스트 광고 ID로 빌드")
+            }
+            manifestPlaceholders["admobAppId"] = appId?.takeIf { it.isNotBlank() } ?: TEST_ADMOB_APP_ID
+            buildConfigField(
+                "String", "BANNER_AD_UNIT_ID",
+                "\"${bannerId?.takeIf { it.isNotBlank() } ?: TEST_BANNER_ID}\"",
+            )
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
@@ -48,6 +69,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
