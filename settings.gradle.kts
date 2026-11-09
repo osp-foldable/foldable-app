@@ -19,4 +19,4 @@ rootProject.name = "foldable-app"
 include(":core:fold")
 
 // 앱들 (새 앱은 apps/<이름> 폴더를 만들고 여기에 한 줄 추가)
-include(":apps:number")
+include(":apps:pick")

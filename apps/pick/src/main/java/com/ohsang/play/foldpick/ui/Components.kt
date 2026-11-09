@@ -1,4 +1,4 @@
-package com.ohsang.play.foldnumber.ui
+package com.ohsang.play.foldpick.ui
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.FastOutSlowInEasing
@@ -66,9 +66,9 @@ import androidx.compose.ui.graphics.ColorFilter
 import com.ohsang.play.fold.core.C
 import com.ohsang.play.fold.core.NumberFont
 import com.ohsang.play.fold.core.vibrateShort
-import com.ohsang.play.foldnumber.PRESETS
-import com.ohsang.play.foldnumber.R
-import com.ohsang.play.foldnumber.UiState
+import com.ohsang.play.foldpick.PRESETS
+import com.ohsang.play.foldpick.R
+import com.ohsang.play.foldpick.UiState
 
 // ---------- 공통 버튼 ----------
 
@@ -120,7 +120,7 @@ fun SettingsIconButton(onClick: () -> Unit) {
 }
 
 @Composable
-fun AppTitle() = Text("랜덤 숫자", color = C.Muted, fontSize = 15.sp, fontWeight = FontWeight.Bold)
+fun AppTitle() = Text("펼쳐 뽑기", color = C.Muted, fontSize = 15.sp, fontWeight = FontWeight.Bold)
 
 @Composable
 fun RangeChip(s: UiState) {

@@ -5,39 +5,39 @@
 | 폴더 | 내용 | 패키지 |
 |---|---|---|
 | `core/fold` | 접힘/펼침 감지, 진동, 공용 색 | `com.ohsang.play.fold.core` |
-| `apps/number` | 랜덤 숫자 — 접었다 펴면 숫자 공개 | `com.ohsang.play.foldnumber` |
+| `apps/pick` | 펼쳐 뽑기 - 랜덤 숫자 — 접었다 펴면 숫자 공개 | `com.ohsang.play.foldpick` |
 
 ## 빌드 (GitHub Actions)
 - **main에 푸시 / PR** → 모든 앱 디버그 APK 빌드. Actions 실행 화면 하단 Artifacts에서 받아 폰에 설치
-- **태그 `<앱>-v<버전>`** (예: `number-v1.0.0`) → 그 앱만 서명된 출시 빌드.
+- **태그 `<앱>-v<버전>`** (예: `pick-v1.0.0`) → 그 앱만 서명된 출시 빌드.
   AAB(스토어 업로드용)와 APK가 Artifacts와 GitHub Release에 올라감
 - versionCode는 Actions 실행 번호로 자동 증가
 
 ```bash
-git tag number-v1.0.0
-git push origin number-v1.0.0
+git tag pick-v1.0.0
+git push origin pick-v1.0.0
 ```
 
 ## 출시 서명 키 등록 (앱마다 한 번)
 1. 키 만들기
    ```bash
-   keytool -genkeypair -v -keystore number.jks -alias number \
+   keytool -genkeypair -v -keystore pick.jks -alias pick \
      -keyalg RSA -keysize 2048 -validity 10000
    ```
-2. base64로 바꾸기: `base64 -w0 number.jks` (macOS는 `base64 -i number.jks`)
+2. base64로 바꾸기: `base64 -w0 pick.jks` (macOS는 `base64 -i pick.jks`)
 3. 저장소 Settings → Secrets and variables → Actions 에 추가 (앱 이름 대문자 접두사)
 
    | Secret | 값 |
    |---|---|
-   | `NUMBER_KEYSTORE_BASE64` | 2번 결과 |
-   | `NUMBER_KEYSTORE_PASSWORD` | keystore 비밀번호 |
-   | `NUMBER_KEY_ALIAS` | `number` |
-   | `NUMBER_KEY_PASSWORD` | 키 비밀번호 |
+   | `PICK_KEYSTORE_BASE64` | 2번 결과 |
+   | `PICK_KEYSTORE_PASSWORD` | keystore 비밀번호 |
+   | `PICK_KEY_ALIAS` | `pick` |
+   | `PICK_KEY_PASSWORD` | 키 비밀번호 |
 
 4. **`.jks` 파일과 비밀번호는 저장소에 올리지 말고 따로 안전하게 보관** (잃어버리면 업데이트 불가 — Play 앱 서명을 쓰면 업로드 키는 재설정 가능)
 
 ## 새 앱 추가하기
-1. `apps/<이름>` 폴더 만들기 (`apps/number`를 참고, 패키지 `com.ohsang.play.fold<이름>`)
+1. `apps/<이름>` 폴더 만들기 (`apps/pick`을 참고, 패키지 `com.ohsang.play.fold<이름>`)
 2. `settings.gradle.kts`에 `include(":apps:<이름>")`
 3. `.github/workflows/build.yml`의 `matrix.app`에 이름 추가
 4. Secrets에 `<이름 대문자>_KEYSTORE_BASE64` 등 4개 추가

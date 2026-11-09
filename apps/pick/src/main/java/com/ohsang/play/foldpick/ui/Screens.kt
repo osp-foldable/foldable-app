@@ -1,4 +1,4 @@
-package com.ohsang.play.foldnumber.ui
+package com.ohsang.play.foldpick.ui
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
@@ -32,14 +32,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.ohsang.play.foldnumber.DrawViewModel
-import com.ohsang.play.foldnumber.MAX_MAX
-import com.ohsang.play.foldnumber.MIN_MAX
+import com.ohsang.play.foldpick.DrawViewModel
+import com.ohsang.play.foldpick.MAX_MAX
+import com.ohsang.play.foldpick.MIN_MAX
 import com.ohsang.play.fold.core.C
 import com.ohsang.play.fold.core.NumberFont
 import com.ohsang.play.fold.core.Posture
-import com.ohsang.play.foldnumber.R
-import com.ohsang.play.foldnumber.UiState
+import com.ohsang.play.foldpick.R
+import com.ohsang.play.foldpick.UiState
 
 @Composable
 fun AppRoot(vm: DrawViewModel) {

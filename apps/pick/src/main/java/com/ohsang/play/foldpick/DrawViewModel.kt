@@ -1,4 +1,4 @@
-package com.ohsang.play.foldnumber
+package com.ohsang.play.foldpick
 
 import android.app.Application
 import android.content.Context

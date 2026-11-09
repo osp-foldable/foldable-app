@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.ohsang.play.foldnumber"
+    namespace = "com.ohsang.play.foldpick"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.ohsang.play.foldnumber"
+        applicationId = "com.ohsang.play.foldpick"
         minSdk = 29
         targetSdk = 36
         // CI에선 빌드 번호로 자동 증가, 로컬에선 1
