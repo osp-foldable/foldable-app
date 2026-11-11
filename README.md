@@ -8,7 +8,9 @@
 | `apps/pick` | 펼쳐 뽑기 - 랜덤 숫자 — 접었다 펴면 숫자 공개 | `com.ohsang.play.foldpick` |
 
 ## 빌드 (GitHub Actions)
-- **main에 푸시 / PR** → 모든 앱 디버그 APK 빌드. Actions 실행 화면 하단 Artifacts에서 받아 폰에 설치
+- **main에 푸시 / PR** → 모든 앱 디버그 APK 빌드 (테스트 광고). main 푸시 때는 고정 링크로도 올라감
+  - 펼쳐 뽑기: https://github.com/osp-foldable/foldable-app/raw/apk/pick-debug.apk
+  - 전체 목록: https://github.com/osp-foldable/foldable-app/tree/apk
 - **태그 `<앱>-v<버전>`** (예: `pick-v1.0.0`) → 그 앱만 서명된 출시 빌드.
   AAB(스토어 업로드용)와 APK가 Artifacts와 GitHub Release에 올라감
 - versionCode는 Actions 실행 번호로 자동 증가
