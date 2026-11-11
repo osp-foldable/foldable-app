@@ -2,8 +2,10 @@ name: Build
 
 on:
   push:
-    branches: [main]
-    tags: ['*-v*']          # 예: pick-v1.0.0 → 펼쳐 뽑기 앱 출시 빌드
+    branches:
+      - main
+      - 'release/*'         # 예: release/pick-v1.0.0 → 펼쳐 뽑기 출시 빌드 (태그·릴리스는 자동 생성)
+    tags: ['*-v*']          # 예: pick-v1.0.0 → 펼쳐 뽑기 출시 빌드
   pull_request:
   workflow_dispatch:
 
@@ -13,7 +15,7 @@ permissions:
 jobs:
   # main 푸시 / PR: 모든 앱 테스트용 APK
   debug:
-    if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+    if: ${{ !startsWith(github.ref, 'refs/tags/') && !startsWith(github.ref, 'refs/heads/release/') }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -37,15 +39,16 @@ jobs:
           name: ${{ matrix.app }}-debug-apk
           path: apps/${{ matrix.app }}/build/outputs/apk/debug/*.apk
 
-  # 태그 <앱>-v<버전>: 그 앱만 서명된 출시 빌드 (AAB + APK)
+  # 태그 <앱>-v<버전> 또는 브랜치 release/<앱>-v<버전>: 그 앱만 서명된 출시 빌드 (AAB + APK)
   release:
-    if: startsWith(github.ref, 'refs/tags/')
+    if: startsWith(github.ref, 'refs/tags/') || startsWith(github.ref, 'refs/heads/release/')
     runs-on: ubuntu-latest
     steps:
       - name: Parse tag
         id: tag
         run: |
-          TAG="${GITHUB_REF_NAME}"
+          TAG="${GITHUB_REF_NAME#release/}"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
           APP="${TAG%%-v*}"
           VER="${TAG#*-v}"
           echo "app=$APP" >> "$GITHUB_OUTPUT"
@@ -67,6 +70,18 @@ jobs:
             echo "::error::Secret ${APP_UPPER}_KEYSTORE_BASE64 이 없습니다"; exit 1
           fi
           echo "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/release.jks"
+      - name: Check ad IDs
+        env:
+          ADMOB_APP_ID: ${{ secrets[format('{0}_ADMOB_APP_ID', env.APP_UPPER)] }}
+          ADMOB_BANNER_ID: ${{ secrets[format('{0}_ADMOB_BANNER_ID', env.APP_UPPER)] }}
+        run: |
+          # 출시 빌드는 실제 광고 ID 필수 (없으면 테스트 광고로 출시되는 사고 방지)
+          [ -n "$ADMOB_APP_ID" ] || { echo "::error::Secret ${APP_UPPER}_ADMOB_APP_ID 이 없습니다"; exit 1; }
+          [ -n "$ADMOB_BANNER_ID" ] || { echo "::error::Secret ${APP_UPPER}_ADMOB_BANNER_ID 이 없습니다"; exit 1; }
+          case "$ADMOB_APP_ID" in ca-app-pub-*~*) ;; *) echo "::error::${APP_UPPER}_ADMOB_APP_ID 형식이 이상합니다 (ca-app-pub-…~…)"; exit 1;; esac
+          case "$ADMOB_BANNER_ID" in ca-app-pub-*/*) ;; *) echo "::error::${APP_UPPER}_ADMOB_BANNER_ID 형식이 이상합니다 (ca-app-pub-…/…)"; exit 1;; esac
+          case "$ADMOB_APP_ID$ADMOB_BANNER_ID" in *3940256099942544*) echo "::error::테스트 광고 ID가 들어 있습니다"; exit 1;; esac
+          echo "광고 ID 확인 완료"
       - name: Build signed release
         env:
           VERSION_CODE: ${{ github.run_number }}
@@ -80,12 +95,15 @@ jobs:
         run: gradle :apps:${{ steps.tag.outputs.app }}:bundleRelease :apps:${{ steps.tag.outputs.app }}:assembleRelease --stacktrace
       - uses: actions/upload-artifact@v4
         with:
-          name: ${{ github.ref_name }}
+          name: ${{ steps.tag.outputs.tag }}
           path: |
             apps/${{ steps.tag.outputs.app }}/build/outputs/bundle/release/*.aab
             apps/${{ steps.tag.outputs.app }}/build/outputs/apk/release/*.apk
       - uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ steps.tag.outputs.tag }}
+          target_commitish: ${{ github.sha }}
+          name: ${{ steps.tag.outputs.tag }}
           files: |
             apps/${{ steps.tag.outputs.app }}/build/outputs/bundle/release/*.aab
             apps/${{ steps.tag.outputs.app }}/build/outputs/apk/release/*.apk
