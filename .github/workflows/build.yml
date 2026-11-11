@@ -37,41 +37,6 @@ jobs:
           name: ${{ matrix.app }}-debug-apk
           path: apps/${{ matrix.app }}/build/outputs/apk/debug/*.apk
 
-  # main 푸시: 디버그 APK를 apk 브랜치에 올려 고정 링크로 받을 수 있게 함
-  #   https://github.com/<저장소>/raw/apk/<앱>-debug.apk
-  publish-apk:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    needs: debug
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/download-artifact@v4
-        with:
-          path: out
-          pattern: '*-debug-apk'
-      - name: Push APKs to apk branch
-        env:
-          TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          mkdir site
-          for d in out/*-debug-apk; do
-            app=$(basename "$d" -debug-apk)
-            cp "$d"/*.apk "site/$app-debug.apk"
-          done
-          cd site
-          {
-            echo "# 테스트용 디버그 APK (테스트 광고)"
-            echo
-            echo "빌드 커밋: ${GITHUB_SHA::7} / $(TZ=Asia/Seoul date '+%Y-%m-%d %H:%M') KST"
-            echo
-            for f in *.apk; do echo "- [$f](https://github.com/${GITHUB_REPOSITORY}/raw/apk/$f)"; done
-          } > README.md
-          git init -q -b apk
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A
-          git commit -qm "debug APK ${GITHUB_SHA::7}"
-          git push -f "https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git" apk
-
   # 태그 <앱>-v<버전>: 그 앱만 서명된 출시 빌드 (AAB + APK)
   release:
     if: startsWith(github.ref, 'refs/tags/')
