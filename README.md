@@ -14,9 +14,15 @@
 - versionCode는 Actions 실행 번호로 자동 증가
 
 ```bash
+# 방법 1: 태그 푸시
 git tag pick-v1.0.0
 git push origin pick-v1.0.0
+
+# 방법 2: release/ 브랜치 푸시 (태그·GitHub Release는 Actions가 자동 생성)
+git push origin main:release/pick-v1.0.0
 ```
+- 출시 빌드는 실제 광고 ID Secrets가 없거나 테스트 ID면 실패하도록 막아둠
+- versionCode는 Actions 실행 번호라 버전마다 자동으로 커짐
 
 ## 출시 서명 키 등록 (앱마다 한 번)
 1. 키 만들기
