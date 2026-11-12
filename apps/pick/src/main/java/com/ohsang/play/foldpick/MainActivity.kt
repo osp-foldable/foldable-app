@@ -4,6 +4,9 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.hardware.Sensor
+import android.hardware.SensorManager
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -43,6 +46,12 @@ class MainActivity : ComponentActivity() {
             IntentFilter(Intent.ACTION_SCREEN_OFF),
             ContextCompat.RECEIVER_NOT_EXPORTED,
         )
+
+        // 힌지 각도 센서가 있으면 접히는 기기로 봄 (Android 11+)
+        val sensors = getSystemService(SensorManager::class.java)
+        val hasHinge = Build.VERSION.SDK_INT >= 30 &&
+            sensors?.getDefaultSensor(Sensor.TYPE_HINGE_ANGLE) != null
+        vm.setFoldable(hasHinge)
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {

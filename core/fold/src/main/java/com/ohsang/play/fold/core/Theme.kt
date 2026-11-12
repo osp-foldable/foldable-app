@@ -1,7 +1,9 @@
 package com.ohsang.play.fold.core
 
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 
 /** 시안의 색 그대로 */
 object C {
@@ -16,8 +18,8 @@ object C {
     val OnAccent = Color(0xFF141519)
 }
 
-/**
- * 숫자용 글꼴. 시안은 Space Grotesk.
- * core/fold/src/main/res/font/space_grotesk.ttf 를 넣고 아래를 FontFamily(Font(R.font.space_grotesk))로 바꾸면 됨.
- */
-val NumberFont: FontFamily = FontFamily.Default
+/** 숫자용 글꼴: Space Grotesk (SIL OFL 1.1, core/fold/SPACE_GROTESK_OFL.txt) */
+val NumberFont: FontFamily = FontFamily(
+    Font(R.font.space_grotesk_bold, FontWeight.Bold),
+    Font(R.font.space_grotesk_medium, FontWeight.Medium),
+)

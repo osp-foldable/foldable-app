@@ -1,18 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 임시 아이콘: 노란 "?" -->
+<!-- 펼쳐 뽑기 아이콘: 펼친 폰 + 노란 숫자 7 (store/icon.svg와 같은 그림) -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp"
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
+    <!-- 왼쪽·오른쪽 화면 -->
     <path
-        android:strokeColor="#FFFFD23F"
-        android:strokeWidth="7"
-        android:strokeLineCap="round"
-        android:strokeLineJoin="round"
-        android:fillColor="#00000000"
-        android:pathData="M44,44 C44,36 49,32 55,32 C61,32 66,36 66,42 C66,50 55,51 55,60" />
+        android:fillColor="#FF1F2127"
+        android:strokeColor="#FFF4F4F6"
+        android:strokeWidth="3"
+        android:pathData="M30,31 H49 A5,5 0 0 1 54,36 V72 A5,5 0 0 1 49,77 H30 A5,5 0 0 1 25,72 V36 A5,5 0 0 1 30,31 Z" />
+    <path
+        android:fillColor="#FF1F2127"
+        android:strokeColor="#FFF4F4F6"
+        android:strokeWidth="3"
+        android:pathData="M59,31 H78 A5,5 0 0 1 83,36 V72 A5,5 0 0 1 78,77 H59 A5,5 0 0 1 54,72 V36 A5,5 0 0 1 59,31 Z" />
+    <!-- 힌지 -->
+    <path
+        android:strokeColor="#FF5A5D67"
+        android:strokeWidth="1.6"
+        android:pathData="M54,35 V37.4 M54,40 V42.4 M54,45 V47.4 M54,50 V52.4 M54,55 V57.4 M54,60 V62.4 M54,65 V67.4 M54,70 V72.4" />
+    <!-- 숫자 7 -->
     <path
         android:fillColor="#FFFFD23F"
-        android:pathData="M55,70 m-4.5,0 a4.5,4.5 0 1,0 9,0 a4.5,4.5 0 1,0 -9,0" />
+        android:pathData="M42,41 H66 V46.5 L53.5,68 H46 L57.8,47 H42 Z" />
+    <!-- 반짝임 -->
+    <path
+        android:strokeColor="#FFFFD23F"
+        android:strokeWidth="2.4"
+        android:strokeLineCap="round"
+        android:pathData="M54,22 V26.5 M66.5,24.5 L64,28.3 M41.5,24.5 L44,28.3" />
 </vector>

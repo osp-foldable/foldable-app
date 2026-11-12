@@ -34,6 +34,11 @@ data class UiState(
     /** 중복 제외 모드에서 다 뽑은 뒤 한 번 더 펼쳤을 때 완료 화면 */
     val showDone: Boolean = false,
     val posture: Posture = Posture.UNKNOWN,
+    /**
+     * 접히는 기기인지. 힌지 센서가 있거나 접힘↔펼침 전환이 한 번이라도 감지되면 true.
+     * 일반 폰·태블릿(심사관 기기 포함)에선 false → 버튼으로 뽑는 방식으로 동작
+     */
+    val foldable: Boolean = false,
 ) {
     val exhausted: Boolean get() = dedupe && history.size >= max
     val remaining: Int get() = (max - history.size).coerceAtLeast(0)
@@ -59,12 +64,21 @@ class DrawViewModel(app: Application) : AndroidViewModel(app) {
 
     // ---- 접힘 상태 ----
 
+    fun setFoldable(value: Boolean) = _state.update { it.copy(foldable = it.foldable || value) }
+
+    /** 폴더블이 아닌 기기에서 '뽑기' 버튼. 다 뽑았으면 처음부터 다시 */
+    fun drawByButton() {
+        if (_state.value.exhausted) reset() else draw()
+    }
+
     fun onPosture(next: Posture) {
         val prev = _state.value.posture
-        _state.update { it.copy(posture = next) }
+        val switched = prev != Posture.UNKNOWN && prev != next
+        _state.update { it.copy(posture = next, foldable = it.foldable || switched) }
 
         val unfoldedNow = next == Posture.UNFOLDED
-        val wasFolded = prev == Posture.FOLDED || (prev == Posture.UNFOLDED && screenWentOff)
+        val wasFolded = prev == Posture.FOLDED ||
+            (prev == Posture.UNFOLDED && screenWentOff && _state.value.foldable)
         screenWentOff = false
 
         if (unfoldedNow && wasFolded) draw()

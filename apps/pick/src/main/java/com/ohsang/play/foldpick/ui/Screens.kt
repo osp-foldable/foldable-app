@@ -144,18 +144,37 @@ private fun ReadyScreen(s: UiState, vm: DrawViewModel) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
         ) {
-            UnfoldIllustration()
-            VSpace(28.dp)
-            Text(
-                if (s.exhausted) "모든 숫자를\n다 뽑았어요" else "폰을 펼치면\n숫자가 나와요",
-                color = C.Text, fontSize = 26.sp, lineHeight = 35.sp,
-                fontWeight = FontWeight.Bold, textAlign = TextAlign.Center,
-            )
-            VSpace(10.dp)
-            Text(
-                if (s.exhausted) "펼쳐서 결과를 확인하세요" else "펼치는 순간 진동과 함께 공개돼요",
-                color = C.Muted, fontSize = 15.sp,
-            )
+            if (!s.foldable && s.current != null) {
+                // 일반 폰: 이 화면에서 바로 숫자 공개
+                Text("${s.history.size}번째 숫자", color = C.Muted, fontSize = 16.sp)
+                PopNumber(s.current, s.pendingPop, vm::onPopShown, fontSize = 160.sp)
+                if (s.exhausted) {
+                    Text("모든 숫자를 다 뽑았어요", color = C.Muted, fontSize = 15.sp, modifier = Modifier.padding(top = 8.dp))
+                }
+            } else if (!s.foldable) {
+                UnfoldIllustration()
+                VSpace(28.dp)
+                Text(
+                    "아래 버튼을 누르면\n숫자가 나와요",
+                    color = C.Text, fontSize = 26.sp, lineHeight = 35.sp,
+                    fontWeight = FontWeight.Bold, textAlign = TextAlign.Center,
+                )
+                VSpace(10.dp)
+                Text("폴더블 폰에선 접었다 펴서 뽑아요", color = C.Muted, fontSize = 15.sp)
+            } else {
+                UnfoldIllustration()
+                VSpace(28.dp)
+                Text(
+                    if (s.exhausted) "모든 숫자를\n다 뽑았어요" else "폰을 펼치면\n숫자가 나와요",
+                    color = C.Text, fontSize = 26.sp, lineHeight = 35.sp,
+                    fontWeight = FontWeight.Bold, textAlign = TextAlign.Center,
+                )
+                VSpace(10.dp)
+                Text(
+                    if (s.exhausted) "펼쳐서 결과를 확인하세요" else "펼치는 순간 진동과 함께 공개돼요",
+                    color = C.Muted, fontSize = 15.sp,
+                )
+            }
         }
 
         if (s.current != null) {
@@ -174,6 +193,11 @@ private fun ReadyScreen(s: UiState, vm: DrawViewModel) {
                     Stat("뽑은 횟수", "${s.history.size}", modifier = Modifier.weight(1f))
                 }
             }
+        }
+
+        if (!s.foldable) {
+            VSpace(12.dp)
+            PrimaryButton(if (s.exhausted) "처음부터 다시" else "뽑기", vm::drawByButton, Modifier.fillMaxWidth())
         }
     }
 }
@@ -212,7 +236,12 @@ private fun RevealScreen(s: UiState, vm: DrawViewModel) {
         ) {
             Text("${s.history.size}번째 숫자", color = C.Muted, fontSize = 16.sp)
             PopNumber(current, s.pendingPop, vm::onPopShown)
-            Text("다시 뽑으려면 접었다 펴세요", color = C.Muted, fontSize = 15.sp, modifier = Modifier.padding(top = 12.dp))
+            if (s.foldable) {
+                Text("다시 뽑으려면 접었다 펴세요", color = C.Muted, fontSize = 15.sp, modifier = Modifier.padding(top = 12.dp))
+            } else {
+                VSpace(16.dp)
+                PrimaryButton("다시 뽑기", vm::drawByButton, Modifier.widthIn(min = 220.dp))
+            }
         }
 
         HistoryBar(s, onReset = vm::reset)
@@ -286,12 +315,20 @@ private fun GuideScreen(s: UiState, vm: DrawViewModel) {
                 UnfoldIllustration()
                 VSpace(24.dp)
                 Text(
-                    if (canClose) "설정을 바꾸면\n기록이 초기화돼요" else "한 번 접었다 펴면\n첫 숫자가 나와요",
+                    when {
+                        canClose -> "설정을 바꾸면\n기록이 초기화돼요"
+                        s.foldable -> "한 번 접었다 펴면\n첫 숫자가 나와요"
+                        else -> "버튼을 누르면\n숫자가 나와요"
+                    },
                     color = C.Text, fontSize = 26.sp, lineHeight = 35.sp,
                     fontWeight = FontWeight.Bold, textAlign = TextAlign.Center,
                 )
                 VSpace(10.dp)
                 Text("설정은 언제든 바꿀 수 있어요", color = C.Muted, fontSize = 15.sp)
+                if (!s.foldable && !canClose) {
+                    VSpace(20.dp)
+                    PrimaryButton("뽑기", vm::draw, Modifier.widthIn(min = 220.dp))
+                }
             }
         }
     }
