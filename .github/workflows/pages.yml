@@ -1,0 +1,45 @@
+name: Pages
+
+# site/ 폴더(앱 소개·개인정보처리방침·이용약관)를 GitHub Pages로 게시
+# 처음 한 번: 저장소 Settings → Pages → Source를 "GitHub Actions"로
+on:
+  push:
+    branches: [main]
+    paths: ['site/**', '.github/workflows/pages.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v5
+      - name: app-ads.txt (AdMob 게시자 ID)
+        env:
+          ADMOB_APP_ID: ${{ secrets.PICK_ADMOB_APP_ID }}
+        run: |
+          # 앱 ID ca-app-pub-XXXX~YYYY 에서 게시자 ID pub-XXXX 추출
+          PUB=$(echo "$ADMOB_APP_ID" | sed -n 's/^ca-app-pub-\([0-9]*\)~.*/pub-\1/p')
+          if [ -n "$PUB" ]; then
+            echo "google.com, $PUB, DIRECT, f08c47fec0942fa0" > site/app-ads.txt
+            echo "app-ads.txt 생성"
+          else
+            echo "::warning::PICK_ADMOB_APP_ID가 없어 app-ads.txt를 만들지 않았습니다"
+          fi
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - id: deploy
+        uses: actions/deploy-pages@v4
