@@ -5,7 +5,8 @@
 | 폴더 | 내용 | 패키지 |
 |---|---|---|
 | `core/fold` | 접힘/펼침 감지, 진동, 공용 색 | `com.ohsang.play.fold.core` |
-| `apps/pick` | 펼쳐 뽑기 - 랜덤 숫자 — 접었다 펴면 숫자 공개 | `com.ohsang.play.foldpick` |
+| `apps/pick` | 펼쳐 뽑기 - 랜덤 숫자 — 접었다 펴면 숫자 공개 ([Play 등록정보](apps/pick/PLAY_STORE.md)) | `com.ohsang.play.foldpick` |
+| `site` | 소개·개인정보처리방침·이용약관 (GitHub Pages, foldable.ohsangplay.com) | |
 
 ## 빌드 (GitHub Actions)
 - **main에 푸시 / PR** → 모든 앱 디버그 APK 빌드 (테스트 광고). Actions 실행 화면 하단 Artifacts에서 받아 폰에 설치
