@@ -208,7 +208,7 @@ Play Console → **모든 앱 → 앱 만들기**
 - AdMob → 앱 → **app-ads.txt** 탭에서 `foldable.ohsangplay.com` 확인 상태 보기 (Play 등록정보의 웹사이트 도메인 루트를 확인해요)
 
 **다음 버전 빌드**
-- `git push origin main:release/pick-v1.0.2` (또는 Claude에게 "1.0.2로 빌드해줘") → 릴리스에 AAB·APK 첨부
+- `git push origin main:release/pick-v1.0.3` (또는 Claude에게 "1.0.3으로 빌드해줘") → 릴리스에 AAB·APK 첨부
 - 버전 코드는 Actions 실행 번호라 자동으로 커져요
 
 **자주 걸리는 부분**
