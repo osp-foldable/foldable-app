@@ -1,4 +1,4 @@
-package com.ohsang.play.foldpick.ui
+package com.ohsang.util.foldpick.ui
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.FastOutSlowInEasing
@@ -63,12 +63,12 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.ui.graphics.ColorFilter
-import com.ohsang.play.fold.core.C
-import com.ohsang.play.fold.core.NumberFont
-import com.ohsang.play.fold.core.vibrateShort
-import com.ohsang.play.foldpick.PRESETS
-import com.ohsang.play.foldpick.R
-import com.ohsang.play.foldpick.UiState
+import com.ohsang.util.fold.core.C
+import com.ohsang.util.fold.core.NumberFont
+import com.ohsang.util.fold.core.vibrateShort
+import com.ohsang.util.foldpick.PRESETS
+import com.ohsang.util.foldpick.R
+import com.ohsang.util.foldpick.UiState
 
 // ---------- 공통 버튼 ----------
 

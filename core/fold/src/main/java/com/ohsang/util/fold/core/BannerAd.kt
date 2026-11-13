@@ -1,4 +1,4 @@
-package com.ohsang.play.fold.core
+package com.ohsang.util.fold.core
 
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxWidth

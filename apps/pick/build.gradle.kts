@@ -9,11 +9,11 @@ val TEST_ADMOB_APP_ID = "ca-app-pub-3940256099942544~3347511713"
 val TEST_BANNER_ID = "ca-app-pub-3940256099942544/9214589741"
 
 android {
-    namespace = "com.ohsang.play.foldpick"
+    namespace = "com.ohsang.util.foldpick"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.ohsang.play.foldpick"
+        applicationId = "com.ohsang.util.foldpick"
         minSdk = 29
         targetSdk = 36
         // CI에선 빌드 번호로 자동 증가, 로컬에선 1

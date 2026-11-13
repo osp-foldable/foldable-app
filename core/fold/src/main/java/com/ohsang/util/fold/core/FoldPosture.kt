@@ -1,4 +1,4 @@
-package com.ohsang.play.fold.core
+package com.ohsang.util.fold.core
 
 import android.app.Activity
 import androidx.window.layout.FoldingFeature

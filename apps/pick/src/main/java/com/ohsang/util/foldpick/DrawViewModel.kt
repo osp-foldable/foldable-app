@@ -1,9 +1,9 @@
-package com.ohsang.play.foldpick
+package com.ohsang.util.foldpick
 
 import android.app.Application
 import android.content.Context
 import androidx.lifecycle.AndroidViewModel
-import com.ohsang.play.fold.core.Posture
+import com.ohsang.util.fold.core.Posture
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

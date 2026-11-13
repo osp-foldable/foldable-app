@@ -4,8 +4,8 @@
 
 | 폴더 | 내용 | 패키지 |
 |---|---|---|
-| `core/fold` | 접힘/펼침 감지, 진동, 공용 색 | `com.ohsang.play.fold.core` |
-| `apps/pick` | 펼쳐 뽑기 - 랜덤 숫자 — 접었다 펴면 숫자 공개 ([Play 등록정보](apps/pick/PLAY_STORE.md)) | `com.ohsang.play.foldpick` |
+| `core/fold` | 접힘/펼침 감지, 진동, 공용 색 | `com.ohsang.util.fold.core` |
+| `apps/pick` | 펼쳐 뽑기 - 랜덤 숫자 — 접었다 펴면 숫자 공개 ([Play 등록정보](apps/pick/PLAY_STORE.md)) | `com.ohsang.util.foldpick` |
 | `site` | 소개·개인정보처리방침·이용약관 (GitHub Pages, foldable.ohsangplay.com) | |
 
 ## 빌드 (GitHub Actions)
@@ -48,7 +48,7 @@ git push origin main:release/pick-v1.0.0
 4. **`.jks` 파일과 비밀번호는 저장소에 올리지 말고 따로 안전하게 보관** (잃어버리면 업데이트 불가 — Play 앱 서명을 쓰면 업로드 키는 재설정 가능)
 
 ## 새 앱 추가하기
-1. `apps/<이름>` 폴더 만들기 (`apps/pick`을 참고, 패키지 `com.ohsang.play.fold<이름>`)
+1. `apps/<이름>` 폴더 만들기 (`apps/pick`을 참고, 패키지 `com.ohsang.util.fold<이름>` (게임이면 `com.ohsang.play.*`))
 2. `settings.gradle.kts`에 `include(":apps:<이름>")`
 3. `.github/workflows/build.yml`의 `matrix.app`에 이름 추가
 4. Secrets에 `<이름 대문자>_KEYSTORE_BASE64` 등 서명 4개 + AdMob 2개 추가

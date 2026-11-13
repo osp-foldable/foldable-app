@@ -3,7 +3,7 @@
 갤럭시 폴드에서 **접었다 펴면** 1~최대 숫자 중 하나가 가운데에서 튀어나오는 앱.
 
 - 앱 이름: 펼쳐 뽑기 (스토어 제목: 펼쳐 뽑기 - 랜덤 숫자)
-- 패키지: `com.ohsang.play.foldpick` (스토어에 올린 뒤엔 변경 불가)
+- 패키지: `com.ohsang.util.foldpick` (스토어에 올린 뒤엔 변경 불가)
 - 출시 태그: `pick-v<버전>` / Secrets 접두사: `PICK_`
 - minSdk 29 / targetSdk 36
 

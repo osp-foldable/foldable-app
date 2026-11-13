@@ -1,4 +1,4 @@
-package com.ohsang.play.fold.core
+package com.ohsang.util.fold.core
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.Font

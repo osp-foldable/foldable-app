@@ -1,4 +1,4 @@
-package com.ohsang.play.foldpick
+package com.ohsang.util.foldpick
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -17,8 +17,8 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.gms.ads.MobileAds
-import com.ohsang.play.fold.core.postureFlow
-import com.ohsang.play.foldpick.ui.AppRoot
+import com.ohsang.util.fold.core.postureFlow
+import com.ohsang.util.foldpick.ui.AppRoot
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.ohsang.play.fold.core"
+    namespace = "com.ohsang.util.fold.core"
     compileSdk = 36
 
     defaultConfig {
