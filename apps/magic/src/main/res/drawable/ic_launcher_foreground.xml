@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 마법의 폴더폰 아이콘: 열린 폴더폰 + 연두 액정 + 반짝임 -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- 윗판 -->
+    <path android:fillColor="#FF4A4D63"
+        android:pathData="M43,20 H65 A5,5 0 0 1 70,25 V52 H38 V25 A5,5 0 0 1 43,20 Z" />
+    <!-- 액정 -->
+    <path android:fillColor="#FFB9CC8B"
+        android:pathData="M45,25 H63 A2.5,2.5 0 0 1 65.5,27.5 V44.5 A2.5,2.5 0 0 1 63,47 H45 A2.5,2.5 0 0 1 42.5,44.5 V27.5 A2.5,2.5 0 0 1 45,25 Z" />
+    <path android:strokeColor="#FF24301A" android:strokeWidth="2.6"
+        android:pathData="M46.5,33.5 H61.5 M48.5,38.5 H59.5" />
+    <!-- 힌지 -->
+    <path android:fillColor="#FF24263A"
+        android:pathData="M42,52 H66 A2,2 0 0 1 68,54 V54.5 A2,2 0 0 1 66,56.5 H42 A2,2 0 0 1 40,54.5 V54 A2,2 0 0 1 42,52 Z" />
+    <!-- 아랫판 -->
+    <path android:fillColor="#FF383B50"
+        android:pathData="M38,56.5 H70 V83 A5,5 0 0 1 65,88 H43 A5,5 0 0 1 38,83 Z" />
+    <!-- 키패드 -->
+    <path android:fillColor="#FF8E91AB"
+        android:pathData="M46,64 m-2.2,0 a2.2,2.2 0 1,0 4.4,0 a2.2,2.2 0 1,0 -4.4,0 M54,64 m-2.2,0 a2.2,2.2 0 1,0 4.4,0 a2.2,2.2 0 1,0 -4.4,0 M62,64 m-2.2,0 a2.2,2.2 0 1,0 4.4,0 a2.2,2.2 0 1,0 -4.4,0 M46,71 m-2.2,0 a2.2,2.2 0 1,0 4.4,0 a2.2,2.2 0 1,0 -4.4,0 M54,71 m-2.2,0 a2.2,2.2 0 1,0 4.4,0 a2.2,2.2 0 1,0 -4.4,0 M62,71 m-2.2,0 a2.2,2.2 0 1,0 4.4,0 a2.2,2.2 0 1,0 -4.4,0 M46,78 m-2.2,0 a2.2,2.2 0 1,0 4.4,0 a2.2,2.2 0 1,0 -4.4,0 M54,78 m-2.2,0 a2.2,2.2 0 1,0 4.4,0 a2.2,2.2 0 1,0 -4.4,0 M62,78 m-2.2,0 a2.2,2.2 0 1,0 4.4,0 a2.2,2.2 0 1,0 -4.4,0" />
+    <!-- 반짝임 -->
+    <path android:fillColor="#FFB9B0FF"
+        android:pathData="M79,26 L80.6,31.4 L86,33 L80.6,34.6 L79,40 L77.4,34.6 L72,33 L77.4,31.4 Z M29,44 L30,47 L33,48 L30,49 L29,52 L28,49 L25,48 L28,47 Z" />
+</vector>
